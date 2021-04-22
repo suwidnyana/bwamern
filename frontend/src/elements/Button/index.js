@@ -51,11 +51,13 @@ export default function Button(props) {
 
     return (
     <button  
-        className={className.join("")} 
+        className={className.join(" ")} 
         style={props.style} 
-        onClick={onClick}>
+        onClick={onClick}
+        >
             {props.children}
-    </button>);
+    </button>
+    );
 }
 
 Button.propTypes = {
@@ -65,6 +67,7 @@ Button.propTypes = {
     target: propTypes.string,
     className: propTypes.string,
     isExternal: propTypes.bool,
+    isPrimary: propTypes.bool,
     isDisabled: propTypes.bool,
     isLoading: propTypes.bool,
     isSmall: propTypes.bool,

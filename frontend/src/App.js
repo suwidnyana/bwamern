@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import LandingPage from './pages/LandingPage'
 import './assets/scss/style.scss'
 function App() {
