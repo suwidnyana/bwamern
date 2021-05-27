@@ -7,26 +7,26 @@ import MostPicked from 'parts/MostPicked';
 import Categories from 'parts/Categories'
 import Testimony from 'parts/Testimony'
 import Footer from 'parts/Footer'
-export default class LandingPage extends Component{
+export default class LandingPage extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.refMostPicked = React.createRef();
     }
 
     render() {
         return (
-        <>
-            <Header {...this.props}></Header>
-            <Hero refMostPicked={this.refMostPicked}  data={landingPage.hero}/>
-            <MostPicked  
-                refMostPicked={this.refMostPicked} 
-                data={landingPage.mostPicked}
-            />
-            <Categories data={landingPage.categories}/>
-            <Testimony data={landingPage.testimonial}/>
-            <Footer/>
-        </>)
+            <>
+                <Header {...this.props}></Header>
+                <Hero refMostPicked={this.refMostPicked} data={landingPage.hero} />
+                <MostPicked
+                    refMostPicked={this.refMostPicked}
+                    data={landingPage.mostPicked}
+                />
+                <Categories data={landingPage.categories} />
+                <Testimony data={landingPage.testimonial} />
+                <Footer />
+            </>)
     }
 }
 

@@ -6,10 +6,10 @@ export default function Footer() {
         <footer>
             <div className="container">
                 <div className="row">
-                    <div className="col-auto" style={{width:350}}>
-                        <IconText/>
+                    <div className="col-auto" style={{ width: 350 }}>
+                        <IconText />
                         <p className="brand-tagline">
-                        We kaboom your beauty holiday instantly and memorable.
+                            We kaboom your beauty holiday instantly and memorable.
                         </p>
                     </div>
                     <div className="col-auto mr-5">
@@ -22,7 +22,7 @@ export default function Footer() {
                             </li>
                             <li className="list-group-item">
                                 <Button type="link" href="/properties">
-                                   Start Booking A Room
+                                    Start Booking A Room
                                 </Button>
                             </li>
                             <li className="list-group-item">
@@ -37,12 +37,12 @@ export default function Footer() {
                         <ul className="list-group list-flush">
                             <li className="list-group-item">
                                 <Button type="link" href="/careers">
-                                   Our Careers
+                                    Our Careers
                                 </Button>
                             </li>
                             <li className="list-group-item">
                                 <Button type="link" href="/privacy">
-                                 Privacy
+                                    Privacy
                                 </Button>
                             </li>
                             <li className="list-group-item">
@@ -67,7 +67,7 @@ export default function Footer() {
                             </li>
                             <li className="list-group-item">
                                 <span>
-                                   Staycation, Bali
+                                    Staycation, Bali
                                 </span>
                             </li>
                         </ul>
