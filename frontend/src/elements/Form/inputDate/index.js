@@ -1,19 +1,20 @@
-import {useState, useRef, useEffect} from 'react'
-import propTypes from 'prop-types'
-import {DateRange} from 'react-date-range'
-import './index.scss';
-import "react-date-range/dist/styles.css";
-import "react-date-range/dist/theme/default.css";
+import React, { useState, useRef, useEffect } from "react";
+import propTypes from "prop-types";
 
-import formatDate from 'utils/formatNumber'
-import iconCalender from 'assets/images/icons/ic_calendar.svg'
+import { DateRange } from "react-date-range";
+
+import "./index.scss";
+import "react-date-range/dist/styles.css"; // main css file
+import "react-date-range/dist/theme/default.css"; // theme css file
+
+import formatDate from "utils/formatDate";
+import iconCalendar from "assets/images/icons/ic_calendar.svg";
 
 export default function Date(props) {
+  const { value, placeholder, name } = props;
+  const [isShowed, setIsShowed] = useState(false);
 
-   const {value, placeholder, name} = props;
-   const [isShowed, setIsShowed] =  useState(false)
-
-   const datePickerChange = (value) => {
+  const datePickerChange = (value) => {
     const target = {
       target: {
         value: value.selection,
@@ -22,7 +23,6 @@ export default function Date(props) {
     };
     props.onChange(target);
   };
-
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -47,15 +47,15 @@ export default function Date(props) {
     value.endDate ? " - " + formatDate(value.endDate) : ""
   }`;
 
-    return (
-      <div
+  return (
+    <div
       ref={refDate}
       className={["input-date mb-3", props.outerClassName].join(" ")}
     >
       <div className="input-group">
         <div className="input-group-prepend bg-gray-900">
           <span className="input-group-text">
-            <img src={iconCalender} alt="icon calendar" />
+            <img src={iconCalendar} alt="icon calendar" />
           </span>
         </div>
         <input
@@ -80,13 +80,12 @@ export default function Date(props) {
         )}
       </div>
     </div>
-    )
+  );
 }
-
 
 Date.propTypes = {
-    value: propTypes.object,
-    onChange: propTypes.func,
-    placeholder: propTypes.string,
-    outerClassName: propTypes.string
-}
+  value: propTypes.object,
+  onChange: propTypes.func,
+  placeholder: propTypes.string,
+  outerClassName: propTypes.string,
+};
