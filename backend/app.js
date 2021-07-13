@@ -4,8 +4,34 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+
+const mongoose = require('mongoose');
+mongoose.connect('mongodb+srv://root:root@cluster0.ducuv.mongodb.net/db_staycation?retryWrites=true&w=majority',{
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
+})
+
+
+
+
+// const CONNECTION_URL = 'mongodb+srv://root:root@cluster0.ducuv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+// const PORT = process.env.PORT|| 5000;
+
+// mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+//   .then(() => app.listen(PORT, () => console.log(`Server Running on Port: http://localhost:${PORT}`)))
+//   .catch((error) => console.log(`${error} did not connect`));
+
+// mongoose.set('useFindAndModify', false);
+
+
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+
+
+
 
 const adminRouter = require('./routes/admin')
 
