@@ -236,7 +236,6 @@ module.exports = {
       const item = await Item.findOne({_id: id}).
         populate({path: 'imageId', select: 'id imageUrl'})
         .populate({path: 'categoryId', select: 'id name'})
-     console.log(item.imageId)
      const category = await Category.find();
       const alertMessage = req.flash("alertMessage");
       const alertStatus = req.flash("alertStatus");
@@ -249,6 +248,49 @@ module.exports = {
         action: 'edit'
       });
     } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/admin/item");
+    }
+  },
+  editItem: async(req, res) => {
+    try {
+      const {id} = req.params;
+      const { categoryId, title, price, city, about} = req.body;
+
+      const item = await Item.findOne({_id: id}).
+        populate({path: 'imageId', select: 'id imageUrl'})
+        .populate({path: 'categoryId', select: 'id name'})
+        
+      if(req.files.length > 0) {
+         for(i = 0; i < item.imageId.length; i++) {
+           const imageUpdate = await Image.findOne({_id: item.imageId[i]._id});
+           await fs.unlink(path.join(`public/${imageUpdate.imageUrl}`));
+           imageUpdate.imageUrl = `images/${req.files[i].filename}`;
+           await imageUpdate.save();
+         }
+         item.title = title,
+         item.price = price,
+         item.city = city,
+         item.description = about,
+         item.categoryId = categoryId
+         await item.save()
+         req.flash("alertMessage", "Success Update Item");
+         req.flash("alertStatus", "success");
+         res.redirect("/admin/item");
+      } else {
+        item.title = title,
+        item.price = price,
+        item.city = city,
+        item.description = about,
+        item.categoryId = categoryId
+        await item.save()
+        req.flash("alertMessage", "Success Update Item");
+        req.flash("alertStatus", "success");
+        res.redirect("/admin/item");
+      }
+    } catch (error) {
+      console.log(error)
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
       res.redirect("/admin/item");
