@@ -18,6 +18,7 @@
                 <label for="name">Image</label>
                 <input type="file" class="form-control" name="image" required>
               </div>
+              <input type="hidden" value="<%= itemId %>" name="itemId">
               <button type="submit" class="btn btn-primary">save</button>
             </form>
           </div>
@@ -34,7 +35,26 @@
                   </tr>
                 </thead>
                 <tbody>
-                 
+                  <% for(let i = 0; i < activity.length; i++) { %>
+                    <tr>
+                      <td><%= i + 1 %></td>
+                      <td><%= activity[i].name %></td>
+                      <td><%= activity[i].type %></td>
+                      <td>
+                        <img src="http://localhost:3000/<%= activity[i].imageUrl %>" alt="imageUrl"
+                          width="70px">
+                      </td>
+                      <td>
+                        <form action="/admin/item/<%= itemId %>/activity/<%= activity[i].id %>?_method=DELETE" method="POST">
+                          <a href="javascript:void();" type="button" class="btn btn-warning btn-circle btn-sm button-update"
+                            data-id="<%= activity[i].id %>" data-name="<%= activity[i].name %>"
+                            data-qty="<%= activity[i].qty %>"><i class=" fas fa-edit"></i></a>
+                          <button type="submit" class="btn btn-danger btn-circle btn-sm"><i
+                              class="fas fa-trash"></i></button>
+                        </form>
+                      </td>
+                    </tr>
+                  <% } %>
                 </tbody>
               </table>
             </div>
