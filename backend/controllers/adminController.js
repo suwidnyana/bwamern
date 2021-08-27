@@ -410,7 +410,7 @@ module.exports = {
     try {
       const { id, itemId} = req.params;
       const feature = await Feature.findOne({ _id: id });
-      const item = await Item.findOne({_id: itemId}).populate('featueId')
+      const item = await Item.findOne({_id: itemId}).populate('featureId')
       
       for(let i = 0; i < item.featureId.lenghth; i++){
         if(item.featureId[i]._id.toString() === feature._id.toString()) {
@@ -454,6 +454,58 @@ module.exports = {
     } catch (error) {
       req.flash('alertMessage', `${error.message}`);
       req.flash('alertStatus', 'danger');
+      res.redirect(`/admin/item/show-detail-item/${itemId}`);
+    }
+  },
+  editActivity: async (req, res) => {
+    const { id, name, type, itemId } = req.body;
+    try {
+      const activity = await Activity.findOne({ _id: id });
+      if (req.file == undefined) {
+        activity.name = name;
+        activity.type = type;
+        await activity.save();
+        req.flash('alertMessage', 'Success Update Activity');
+        req.flash('alertStatus', 'success');
+        res.redirect(`/admin/item/show-detail-item/${itemId}`);
+      } else {
+        await fs.unlink(path.join(`public/${activity.imageUrl}`));
+        activity.name = name;
+        activity.type = type;
+        activity.imageUrl = `images/${req.file.filename}`
+        await activity.save();
+        req.flash('alertMessage', 'Success Update Activity');
+        req.flash('alertStatus', 'success');
+        res.redirect(`/admin/item/show-detail-item/${itemId}`);
+      }
+    } catch (error) {
+      console.log(error);
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect(`/admin/item/show-detail-item/${itemId}`);
+    }
+  },
+  deleteActivity: async(req, res) => {
+    const { id, itemId} = req.params;
+    try {
+        const activity = await Activity.findOne({ _id: id });
+        const item = await Item.findOne({_id: itemId}).populate('activityId')
+        
+        for(let i = 0; i < item.activityId.length; i++) {
+          if(item.activityId[i]._id.toString() === activity._id.toString()) {
+            item.activityId.pull({ _id: activity._id })
+            await item.save()
+          }
+        }
+      
+      await fs.unlink(path.join(`public/${activity.imageUrl}`));
+      await activity.remove();
+      req.flash("alertMessage", "Success Delete Activity");
+      req.flash("alertStatus", "success");
+      res.redirect(`/admin/item/show-detail-item/${itemId}`);
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
       res.redirect(`/admin/item/show-detail-item/${itemId}`);
     }
   },
