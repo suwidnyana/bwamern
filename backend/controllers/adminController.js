@@ -5,6 +5,8 @@ const Image = require("../models/Image");
 const Feature = require("../models/Feature");
 const Activity = require("../models/Activity");
 const Users = require("../models/Users");
+const Booking = require("../models/Booking");
+const Member = require("../models/Member");
 
 
 
@@ -572,10 +574,21 @@ module.exports = {
       res.redirect(`/admin/item/show-detail-item/${itemId}`);
     }
   },
-  viewBooking: (req, res) => {
-    res.render("admin/booking/view_booking", {
-      title: "Staycation | Booking",
-      user: req.session.user,
-    });
+  viewBooking: async(req, res) => {
+    try {
+      const booking = await Booking.find()
+      .populate('memberId')
+      .populate('bankId')
+      res.render("admin/booking/view_booking", {
+        booking,
+        title: "Staycation | Booking",
+        user: req.session.user,
+      });
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/admin/bank");
+    }
+    
   },
 };
