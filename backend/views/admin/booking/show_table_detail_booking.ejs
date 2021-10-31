@@ -7,18 +7,20 @@
         <div class="col-md-4">
             <img src="http://localhost:3000/<%= booking.payments.proofPayment %>" alt="imageUrl" style="width: 100%; display: block;">
             <div class="row ml-1">
-                <form action="/admin" method="POST">
+              <% if(booking.payments.status == 'Proses') { %>
+                <form action="/admin/booking/<%= booking.id %>/confirmation?_method=PUT" method="POST">
                     <button type="submit" class="btn btn-success  btn-sm">
                         <i class="fas fa-check"></i>
                             Confirmation
                     </button>
                   </form>
-                  <form action="/admin" method="POST" class="ml-2">
+                  <form action="/admin/booking/<%= booking.id %>/reject?_method=PUT" method="POST" class="ml-2">
                     <button type="submit" class="btn btn-danger  btn-sm">
                         <i class="fas fa-times"></i>
                           Reject
                     </button>
                   </form>
+             <% } %>
             </div>
         </div>
         <div class="col-md-8">
