@@ -106,5 +106,49 @@ module.exports = {
         console.log(error)
         res.status(500).json({message: "internal server error"})
       }
+    },
+
+   bookingPage: async(req, res) => {
+    try {
+      const {
+        idItem,
+        duration,
+        // price,
+        bookingDateStart,
+        bookingDateEnd,
+        firstName,
+        lastName,
+        emailAddress,
+        phoneNumber,
+        accountHolder,
+        bankFrom,
+       
+      } = req.body
+
+      if(!req.file) {
+        res.status(404).json({message: "image  not found"})
+      }
+
+
+      if( 
+        idItem === undefined ||
+        duration  === undefined ||
+        // price  === undefined ||
+        bookingDateStart  === undefined ||
+        bookingDateEnd  === undefined ||
+        firstName  === undefined ||
+        lastName  === undefined ||
+        emailAddress  === undefined ||
+        phoneNumber  === undefined ||
+        accountHolder  === undefined ||
+        bankFrom  === undefined ) {
+          res.status(404).json({message: "lengkapi semua field"})
+      }
+
+      res.status(201).json({message: "Success Booking"});
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({message: "internal server error"})
     }
+   }
 }
