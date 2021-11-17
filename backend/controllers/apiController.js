@@ -3,6 +3,8 @@ const Treasure = require('../models/Activity')
 const Traveler = require('../models/Booking')
 const Category =  require('../models/Category')
 const Bank = require('../models/Bank')
+const Member = require('../models/Member')
+const Booking = require('../models/Booking')
 
 module.exports = {
     landingPage: async(req, res) => {
@@ -109,46 +111,85 @@ module.exports = {
     },
 
    bookingPage: async(req, res) => {
-    try {
-      const {
-        idItem,
-        duration,
-        // price,
-        bookingDateStart,
-        bookingDateEnd,
-        firstName,
-        lastName,
-        emailAddress,
-        phoneNumber,
-        accountHolder,
-        bankFrom,
-       
-      } = req.body
+    const {
+      idItem,
+      duration,
+      // price,
+      bookingStartDate,
+      bookingEndDate,
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      accountHolder,
+      bankFrom,
+    } = req.body;
 
-      if(!req.file) {
-        res.status(404).json({message: "image  not found"})
-      }
-
-
-      if( 
-        idItem === undefined ||
-        duration  === undefined ||
-        // price  === undefined ||
-        bookingDateStart  === undefined ||
-        bookingDateEnd  === undefined ||
-        firstName  === undefined ||
-        lastName  === undefined ||
-        emailAddress  === undefined ||
-        phoneNumber  === undefined ||
-        accountHolder  === undefined ||
-        bankFrom  === undefined ) {
-          res.status(404).json({message: "lengkapi semua field"})
-      }
-
-      res.status(201).json({message: "Success Booking"});
-    } catch (error) {
-      console.log(error)
-      res.status(500).json({message: "internal server error"})
+    if (!req.file) {
+      return res.status(404).json({ message: "Image not found" });
     }
+
+    console.log(idItem)
+
+    if (
+      idItem === undefined ||
+      duration === undefined ||
+      // price === undefined ||
+      bookingStartDate === undefined ||
+      bookingEndDate === undefined ||
+      firstName === undefined ||
+      lastName === undefined ||
+      email === undefined ||
+      phoneNumber === undefined ||
+      accountHolder === undefined ||
+      bankFrom === undefined) {
+      res.status(404).json({ message: "Lengkapi semua field" });
+    }
+
+    const item = await Item.findOne({ _id: idItem });
+
+    if (!item) {
+      return res.status(404).json({ message: "Item not found" });
+    }
+
+    item.sumBooking += 1;
+
+    await item.save();
+
+    let total = item.price * duration;
+    let tax = total * 0.10;
+
+    const invoice = Math.floor(1000000 + Math.random() * 9000000);
+
+    const member = await Member.create({
+      firstName,
+      lastName,
+      email,
+      phoneNumber
+    });
+
+    const newBooking = {
+      invoice,
+      bookingStartDate,
+      bookingEndDate,
+      total: total += tax,
+      itemId: {
+        _id: item.id,
+        title: item.title,
+        price: item.price,
+        duration: duration
+      },
+
+      memberId: member.id,
+      payments: {
+        proofPayment: `images/${req.file.filename}`,
+        bankFrom: bankFrom,
+        accountHolder: accountHolder
+      }
+    }
+
+    const booking = await Booking.create(newBooking);
+
+    res.status(201).json({ message: "Success Booking", booking });
    }
 }

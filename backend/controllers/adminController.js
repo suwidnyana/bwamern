@@ -603,9 +603,12 @@ module.exports = {
       const alertMessage = req.flash("alertMessage");
       const alertStatus = req.flash("alertStatus");
       const alert = { message: alertMessage, status: alertStatus };
+
+
       const booking = await Booking.findOne({_id: id})
       .populate('memberId')
       .populate('bankId')
+      
       res.render("admin/booking/show_detail_booking", {
         title: "Staycation | Detail Booking",
         user: req.session.user,
