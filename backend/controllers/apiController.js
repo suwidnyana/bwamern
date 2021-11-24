@@ -8,7 +8,6 @@ const Booking = require('../models/Booking')
 
 module.exports = {
     landingPage: async(req, res) => {
-        
         try {
             const mostPicked = await Item.find()
             .select('_id title country city price unit imageId')
