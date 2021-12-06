@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import {withRouter} from "react-router-dom"
 import propTypes from "prop-types";
 
 import Button from "elements/Button";
@@ -77,7 +77,7 @@ class BookingForm extends Component {
         endDate: data.date.endDate,
       },
     });
-    // this.props.history.push("/checkout");
+    this.props.history.push("/checkout");
   };
 
   render() {
@@ -143,4 +143,4 @@ BookingForm.propTypes = {
   startBooking: propTypes.func,
 };
 
-export default BookingForm;
+export default withRouter(BookingForm);

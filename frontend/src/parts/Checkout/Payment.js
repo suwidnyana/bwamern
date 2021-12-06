@@ -1,6 +1,6 @@
 import React from 'react'
 import Fade from "react-reveal/Fade"
-import { InputFile } from "elements/Form"
+import { InputFile, InputText } from "elements/Form"
 import logoBca from "assets/images/logo-bca.jpg"
 import logoMandiri from "assets/images/logo-mandiri.jpg"
 
@@ -59,7 +59,7 @@ export default function Payment(props) {
                             />
 
                             <label htmlFor="bankName">Asal Bank</label>
-                            <InputFile
+                            <InputText
                                 id="bankName"
                                 name="bankName"
                                 type="text"
@@ -69,8 +69,8 @@ export default function Payment(props) {
 
 
                             <label htmlFor="bankName">Nama Pengirim</label>
-                            <InputFile
-                                id="bankHolder"
+                            <InputText
+                                id="bankHolder."
                                 name="bankHolder"
                                 type="text"
                                 value={data.bankHolder}

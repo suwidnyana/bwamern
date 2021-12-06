@@ -3,13 +3,14 @@ import Header from 'parts/Header'
 import Fade from 'react-reveal/Fade'
 import Button from 'elements/Button'
 import Stepper, { Numbering, Meta, MainContent, Controller } from 'elements/Stepper'
+import { connect } from "react-redux";
 
 import BookingInformation from 'parts/Checkout/BookingInformation'
 import Payment from 'parts/Checkout/Payment'
 import Completed from 'parts/Checkout/Completed'
 
 import ItemDetails from "json/itemDetails.json"
-export default class Checkout extends Component {
+class Checkout extends Component {
     state = {
         data: {
             firstName: "",
@@ -23,7 +24,7 @@ export default class Checkout extends Component {
     };
 
 
-    onChnge = (event) => {
+    onChange = (event) => {
         this.setState({
             data: {
                 ...this.state.data,
@@ -41,12 +42,31 @@ export default class Checkout extends Component {
       
     render() {
         const { data } = this.state
-        
-        const checkout = {
-            duration: 3,
-        }
-
-        
+        const {checkout} = this.props
+        if (!checkout)
+        return (
+          <div className="container">
+            <div
+              className="row align-items-center justify-content-center text-center"
+              style={{ height: "100vh" }}
+            >
+              <div className="col-3">
+                Pilih kamar dulu
+                <div>
+                  <Button
+                    className="btn mt-5"
+                    type="button"
+                    onClick={() => this.props.history.goBack()}
+                    isLight
+                  >
+                    Back
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+  
         const steps = {
             bookingInformation: {
                 title: "Booking information",
@@ -79,12 +99,12 @@ export default class Checkout extends Component {
             }
 
         }
+
         return (
-            <div>
+            <>
                 <Header isCentered />
                 <Stepper steps={steps}>
-                    {
-                        (prevStep, nextStep, CurrentStep, steps) => (
+                    {(prevStep, nextStep, CurrentStep, steps) => (
                             <>
                                 <Numbering
                                     data={steps}
@@ -94,40 +114,37 @@ export default class Checkout extends Component {
                                 />
                                 <Meta data={steps} current={CurrentStep} />
                                 <MainContent data={steps} current={CurrentStep} />
-
-                                {CurrentStep === "bookingInfomation" && (
+                               
+                                {CurrentStep === "bookingInformation" && (
                                     <Controller>
-                                        {data.firstName !== "" &&
-                                            data.lastName !== "" &&
-                                            data.email !== "" &&
-                                            data.phone !== "" && (
-                                                <Fade>
-                                                    <Button
-                                                        className="btn mb-3"
-                                                        type="button"
-                                                        isBlock
-                                                        isPrimary
-                                                        hasShadow
-                                                        onClick={nextStep}
-
-                                                    >
-                                                        Continue to Book
-                                                    </Button>
-                                                </Fade>
-
-                                            )}
-                                        <Button
-                                            className="btn"
-                                            type="link"
+                                    {data.firstName !== "" &&
+                                      data.lastName !== "" &&
+                                      data.email !== "" &&
+                                      data.phone !== "" && (
+                                        <Fade>
+                                          <Button
+                                            className="btn mb-3"
+                                            type="button"
                                             isBlock
-                                            isLight
-                                            href={`/properties/${ItemDetails._id}`}
-                                        >
-                                            Cancel
-                                        </Button>
-                                    </Controller>
+                                            isPrimary
+                                            hasShadow
+                                            onClick={nextStep}
+                                          >
+                                            Continue to Book
+                                          </Button>
+                                        </Fade>
+                                      )}
+                                    <Button
+                                      className="btn"
+                                      type="link"
+                                      isBlock
+                                      isLight
+                                     href={`/properties/${ItemDetails._id}`}
+                                    >
+                                      Cancel
+                                    </Button>
+                                  </Controller>
                                 )}
-
 
                                 {CurrentStep === "payment" && (
                                     <Controller>
@@ -177,11 +194,17 @@ export default class Checkout extends Component {
                                     </Controller>
                                 )}
                             </>
-
-                        )
-                    }
+                        )}
                 </Stepper>
-            </div>
+            </>
         )
     }
 }
+
+const mapStateToProps = (state) => ({
+    checkout: state.checkout,
+    page: state.page,
+})
+
+
+export default connect(mapStateToProps)(Checkout)
