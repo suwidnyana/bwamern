@@ -30,6 +30,7 @@ class BookingForm extends Component {
     });
   };
 
+ 
 
   componentDidUpdate(prevProps, prevState) {
     const { data } = this.state;
@@ -64,6 +65,8 @@ class BookingForm extends Component {
     }
   }
 
+
+  
   startBooking = () => {
     const { data } = this.state;
     this.props.startBooking({
@@ -74,7 +77,7 @@ class BookingForm extends Component {
         endDate: data.date.endDate,
       },
     });
-    this.props.history.push("/checkout");
+    // this.props.history.push("/checkout");
   };
 
   render() {

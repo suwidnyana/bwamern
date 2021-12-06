@@ -1,6 +1,6 @@
 import Header from 'parts/Header';
 import Fade from "react-reveal/Fade";
-
+import {connect} from "react-redux"
 import PageDetailTitle from 'parts/PageDetailTitle';
 import React, { Component } from 'react'
 import FeaturedImage from 'parts/FeaturedImage';
@@ -13,8 +13,9 @@ import Testimony from 'parts/Testimony'
 import ItemDetails from "json/itemDetails.json"
 import Footer from 'parts/Footer';
 
+import {checkoutBooking} from "store/actions/checkout"
 
-export default class DetailsPage extends Component {
+class DetailsPage extends Component {
 
     componentDidMount() {
         window.title = "Details Page";
@@ -45,7 +46,7 @@ export default class DetailsPage extends Component {
                             </Fade>
                         </div>
                         <div className="col-5">
-                            <BookingForm itemDetails={ItemDetails}></BookingForm>
+                            <BookingForm itemDetails={ItemDetails} startBooking={this.props.checkoutBooking}/>
                         </div>
                     </div>
                 </section>
@@ -56,3 +57,5 @@ export default class DetailsPage extends Component {
         )
     }
 }
+
+export default connect(null, {checkoutBooking})(DetailsPage);
