@@ -5,24 +5,17 @@ import Button from 'elements/Button'
 
 
 export default function Categories({ data }) {
-    console.log(data)
-    return data.map((category, index1) => {
-        return (
+  return data.map((category, index1) => {
+    if (category.itemId.length === 0) return null;
 
+        return (
             <section className="container" key={`category-${index1}`}>
                 <Fade bottom>
                     <h4 className="mb-3 font-weight-medium">
-                        {category.name}
+                    {category.name}
                     </h4>
                     <div className="container-grid">
-                        {category.items.length === 0 ? (
-                            <div className="row">
-                                <div className="col-auto align-items-center">
-                                    There is no property at this category
-                    </div>
-                            </div>
-                        ) : (
-                            category.items.map((item, index2) => {
+                        {category.itemId.map((item, index2) => {
                                 return (
                                     <div className="item column-3 row-1"
                                         key={`category-${index1}-item-${index2}`}>
@@ -49,7 +42,7 @@ export default function Categories({ data }) {
                                         </Fade>
                                     </div>
                                 );
-                            }))}
+                            })}
                     </div>
                 </Fade>
             </section>
