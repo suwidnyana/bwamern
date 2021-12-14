@@ -28,7 +28,9 @@ export default function Categories({ data }) {
                                                     </div>
                                                 )}
                                                 <figure className="img-wrapper" style={{ height: 180 }}>
-                                                    <img src={item.imageUrl} alt={item.name} className="img-cover" />
+                                                <img src={item.imageId[0]
+                                                    ? `${process.env.REACT_APP_HOST}/${item.imageId[0].imageUrl}`
+                                                     : ""} alt={item.name} className="img-cover" />
                                                 </figure>
                                                 <div className="meta-wrapper">
                                                     <Button type="link" href={`/properties/${item._id}`} className="streched-link d-block text-gray-800">

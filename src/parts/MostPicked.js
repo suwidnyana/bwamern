@@ -8,8 +8,7 @@ export default function MostPicked(props) {
             <Fade bottom>
                 <h4 className="mb-3">Most Picked</h4>
                 <div className="container-grid">
-                    {
-                        props.data.map((item, index) => {
+                    {props.data.map((item, index) => {
                             return (
                                 <div
                                     key={`mostpicked-${index}`}
@@ -22,7 +21,11 @@ export default function MostPicked(props) {
                                             </div>
                                             <figure className="img-wrapper">
                                                 <img
-                                                    src={item.imageUrl}
+                                                     src={
+                                                        item.imageId[0]
+                                                          ? `${process.env.REACT_APP_HOST}/${item.imageId[0].imageUrl}`
+                                                          : ""
+                                                      }
                                                     alt={item.name}
                                                     className="img-cover"
                                                 />
