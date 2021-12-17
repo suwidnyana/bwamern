@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import {withRouter} from "react-router-dom"
+import { withRouter } from "react-router-dom";
+
 import propTypes from "prop-types";
 
 import Button from "elements/Button";
@@ -29,8 +30,6 @@ class BookingForm extends Component {
       },
     });
   };
-
- 
 
   componentDidUpdate(prevProps, prevState) {
     const { data } = this.state;
@@ -65,8 +64,6 @@ class BookingForm extends Component {
     }
   }
 
-
-  
   startBooking = () => {
     const { data } = this.state;
     this.props.startBooking({
@@ -95,8 +92,6 @@ class BookingForm extends Component {
         </h5>
 
         <label htmlFor="duration">How long you will stay?</label>
-       
-
         <InputNumber
           max={30}
           suffix={" night"}
@@ -109,7 +104,6 @@ class BookingForm extends Component {
         <label htmlFor="date">Pick a date</label>
         <InputDate onChange={this.updateData} name="date" value={data.date} />
 
-        
         <h6
           className="text-gray-500 font-weight-light"
           style={{ marginBottom: 40 }}

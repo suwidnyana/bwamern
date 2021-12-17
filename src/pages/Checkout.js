@@ -42,9 +42,20 @@ class Checkout extends Component {
     document.title = "Staycation | Checkout";
   }
 
-  render() {
+  _Submit = (nextStep) => {
     const { data } = this.state;
     const { checkout } = this.props;
+
+    const payload = new FormData();
+
+  }
+
+
+  render() {
+    const { data } = this.state;
+    const { checkout, page } = this.props;
+
+    
     if (!checkout)
       return (
         <div className="container">
@@ -55,7 +66,7 @@ class Checkout extends Component {
             }}
           >
             <div className="col-3">
-              Pilih kamar dulu{" "}
+              Pilih kamar dulu
               <div>
                 <Button
                   className="btn mt-5"
@@ -63,11 +74,11 @@ class Checkout extends Component {
                   onClick={() => this.props.history.goBack()}
                   isLight
                 >
-                  Back{" "}
-                </Button>{" "}
-              </div>{" "}
-            </div>{" "}
-          </div>{" "}
+                  Back
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
       );
 
@@ -79,7 +90,7 @@ class Checkout extends Component {
           <BookingInformation
             data={data}
             checkout={checkout}
-            ItemDetails={ItemDetails}
+            ItemDetails={page[checkout._id]}
             onChange={this.onChange}
           />
         ),
@@ -91,7 +102,7 @@ class Checkout extends Component {
           <Payment
             data={data}
             checkout={checkout}
-            ItemDetails={ItemDetails}
+            ItemDetails={page[checkout._id]}
             onChange={this.onChange}
           />
         ),
@@ -106,8 +117,9 @@ class Checkout extends Component {
     return (
       <>
         <Header isCentered />
-        <Stepper steps={steps}>
-          {" "}
+        <Stepper steps={steps} 
+        // initialStep="payment"
+        >
           {(prevStep, nextStep, CurrentStep, steps) => (
             <>
               <Numbering
@@ -116,12 +128,13 @@ class Checkout extends Component {
                 style={{
                   marginBottom: 50,
                 }}
-              />{" "}
-              <Meta data={steps} current={CurrentStep} />{" "}
+              />
+              <Meta data={steps} current={CurrentStep} />
               <MainContent data={steps} current={CurrentStep} />
+
               {CurrentStep === "bookingInformation" && (
                 <Controller>
-                  {" "}
+                 
                   {data.firstName !== "" &&
                     data.lastName !== "" &&
                     data.email !== "" &&
@@ -135,10 +148,10 @@ class Checkout extends Component {
                           hasShadow
                           onClick={nextStep}
                         >
-                          Continue to Book{" "}
-                        </Button>{" "}
+                          Continue to Book
+                        </Button>
                       </Fade>
-                    )}{" "}
+                    )}
                   <Button
                     className="btn"
                     type="link"
@@ -146,13 +159,13 @@ class Checkout extends Component {
                     isLight
                     href={`/properties/${ItemDetails._id}`}
                   >
-                    Cancel{" "}
-                  </Button>{" "}
+                    Cancel
+                  </Button>
                 </Controller>
               )}
               {CurrentStep === "payment" && (
                 <Controller>
-                  {" "}
+                  
                   {data.proofPayment !== "" &&
                     data.bankName !== "" &&
                     data.bankHolder !== "" && (
@@ -163,12 +176,12 @@ class Checkout extends Component {
                           isBlock
                           isPrimary
                           hasShadow
-                          onClick={nextStep}
+                          onClick={() => this._Submit(nextStep)}
                         >
-                          Continue to Book{" "}
-                        </Button>{" "}
+                          Continue to Book
+                        </Button>
                       </Fade>
-                    )}{" "}
+                    )}
                   <Button
                     className="btn"
                     type="link"
@@ -176,8 +189,8 @@ class Checkout extends Component {
                     isLight
                     onClick={prevStep}
                   >
-                    Cancel{" "}
-                  </Button>{" "}
+                    Cancel
+                  </Button>
                 </Controller>
               )}
               {CurrentStep === "completed" && (
@@ -190,13 +203,13 @@ class Checkout extends Component {
                     hasShadow
                     href=""
                   >
-                    Back to Home{" "}
-                  </Button>{" "}
+                    Back to Home
+                  </Button>
                 </Controller>
-              )}{" "}
+              )}
             </>
-          )}{" "}
-        </Stepper>{" "}
+          )}
+        </Stepper>
       </>
     );
   }
@@ -207,4 +220,4 @@ const mapStateToProps = (state) => ({
   page: state.page,
 });
 
-export default connect(mapStateToProps)(Checkout);
+export default connect(mapStateToProps, )(Checkout);

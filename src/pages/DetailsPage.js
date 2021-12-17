@@ -11,7 +11,6 @@ import Testimony from 'parts/Testimony'
 import Activites from 'parts/Activities'
 
 
-import ItemDetails from "json/itemDetails.json"
 import Footer from 'parts/Footer';
 
 import {checkoutBooking} from "store/actions/checkout"
@@ -62,7 +61,9 @@ class DetailsPage extends Component {
                             </Fade>
                         </div>
                         <div className="col-5">
-                            <BookingForm itemDetails={page[match.params.id]} startBooking={this.props.checkoutBooking}/>
+                            <BookingForm 
+                            itemDetails={page[match.params.id]} 
+                            startBooking={this.props.checkoutBooking}/>
                         </div>
                     </div>
                 </section>
