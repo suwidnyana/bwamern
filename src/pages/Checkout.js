@@ -52,7 +52,7 @@ class Checkout extends Component {
     const payload = new FormData();
 
     payload.append("firstName", data.firstName);
-    payload.append("lastName", data.lastName);
+    payload.append("lastNames", data.lastName);
     payload.append("email", data.email);
     payload.append("phoneNumber", data.phone);
     payload.append("idItem", checkout._id);
@@ -65,8 +65,6 @@ class Checkout extends Component {
     
     this.props.submitBooking(payload).then(() => {
       nextStep();
-    }).catch((error) => {
-      console.log(error)
     });
   }
 

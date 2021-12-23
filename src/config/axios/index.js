@@ -1,4 +1,5 @@
 import axios from 'axios'
+
 import errorResponseHandler from './errorResponseHandler'
 
 const instance = axios.create({
@@ -6,7 +7,7 @@ const instance = axios.create({
 });
 
 instance.interceptors.response.use(
-    (r) => r,errorResponseHandler
+    (response) => response,errorResponseHandler
 )
 
 
