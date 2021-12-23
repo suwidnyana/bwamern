@@ -8,7 +8,7 @@ export const checkoutBooking =  (payload) => (dispatch) =>  {
 };
 
 export const submitBooking =  (payload) => () =>  {
-   return axios.post(`https://admin-staycation99.herokuapp.com/api/v1/member/booking-page`,
+   return axios.post(`${process.env.REACT_APP_HOST}/api/v1/member/booking-page`,
     payload,
     {header: {contentType: "multipart/form-data"}}
    )
