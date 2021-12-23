@@ -1,5 +1,5 @@
 import { CHECKOUT_BOOKING } from "../types";
-import axios from 'axios'
+import axios from 'config/axios'
 export const checkoutBooking =  (payload) => (dispatch) =>  {
     dispatch({
         type: CHECKOUT_BOOKING,
@@ -8,7 +8,7 @@ export const checkoutBooking =  (payload) => (dispatch) =>  {
 };
 
 export const submitBooking =  (payload) => () =>  {
-   return axios.post(`${process.env.REACT_APP_HOST}/api/v1/member/booking-page`,
+   return axios.post(`/booking-page`,
     payload,
     {header: {contentType: "multipart/form-data"}}
    )
