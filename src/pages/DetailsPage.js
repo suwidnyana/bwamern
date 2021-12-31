@@ -6,7 +6,7 @@ import React, { Component } from 'react'
 import FeaturedImage from 'parts/FeaturedImage';
 import PageDetailsDescription from 'parts/PageDetailDescription'
 import BookingForm from 'parts/BookingForm'
-import Categories from 'parts/Categories'
+
 import Testimony from 'parts/Testimony'
 import Activites from 'parts/Activities'
 
