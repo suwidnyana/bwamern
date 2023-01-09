@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
-import propTypes from "prop-types";
+import propTypes from 'prop-types';
 
-import Button from "elements/Button";
-import { InputNumber, InputDate } from "elements/Form";
-
+import Button from 'elements/Button';
+import { InputNumber, InputDate } from 'elements/Form';
+import ButtonSubmitBooking from 'elements/ButtonSubmitBooking';
 class BookingForm extends Component {
   constructor(props) {
     super(props);
@@ -15,7 +15,7 @@ class BookingForm extends Component {
         date: {
           startDate: new Date(),
           endDate: new Date(),
-          key: "selection",
+          key: 'selection',
         },
       },
     };
@@ -74,7 +74,7 @@ class BookingForm extends Component {
         endDate: data.date.endDate,
       },
     });
-    this.props.history.push("/checkout");
+    this.props.history.push('/checkout');
   };
 
   render() {
@@ -82,10 +82,10 @@ class BookingForm extends Component {
     const { itemDetails } = this.props;
 
     return (
-      <div className="card bordered" style={{ padding: "60px 80px" }}>
+      <div className="card bordered" style={{ padding: '60px 80px' }}>
         <h4 className="mb-3">Start Booking</h4>
         <h5 className="h2 text-teal mb-4">
-          ${itemDetails.price}{" "}
+          ${itemDetails.price}{' '}
           <span className="text-gray-500 font-weight-light">
             per {itemDetails.unit}
           </span>
@@ -94,7 +94,7 @@ class BookingForm extends Component {
         <label htmlFor="duration">How long you will stay?</label>
         <InputNumber
           max={30}
-          suffix={" night"}
+          suffix={' night'}
           isSuffixPlural
           onChange={this.updateData}
           name="duration"
@@ -108,16 +108,17 @@ class BookingForm extends Component {
           className="text-gray-500 font-weight-light"
           style={{ marginBottom: 40 }}
         >
-          You will pay{" "}
+          You will pay{' '}
           <span className="text-gray-900">
             ${itemDetails.price * data.duration} USD
-          </span>{" "}
-          per{" "}
+          </span>{' '}
+          per{' '}
           <span className="text-gray-900">
             {data.duration} {itemDetails.unit}
           </span>
         </h6>
 
+        <ButtonSubmitBooking data={data} itemDetails={itemDetails} />
         <Button
           className="btn"
           hasShadow
@@ -137,4 +138,4 @@ BookingForm.propTypes = {
   startBooking: propTypes.func,
 };
 
-export default withRouter(BookingForm);
+export default BookingForm;
